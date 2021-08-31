@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  	
+    <style>
+      body{
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #unity-canvas{
+        background: transparent!important;
+      }
+    </style>
+    <script>
+
+    window.addEventListener("message", (event)=>{
+      let data = event.data;
+      let ev = null;
+      switch(data.type){
+        case "click":
+          break;
+        case "show":
+          window.parent.postMessage({
+            type: "buttonRequest"
+          }, '*');
+          break;
+        case "up":
+          if(data.which == "left"){
+            ev = {key:'a', keyCode: 65};
+          } else if(data.which == "right"){
+            ev = {key:'d', keyCode: 68};
+          }
+          if(ev){
+            window.dispatchEvent(new KeyboardEvent('keyup', ev));
+          }
+        break;
+        case "down":
+          if(data.which == "left"){
+            ev = {key:'a', keyCode: 65};
+          } else if(data.which == "right"){
+            ev = {key:'d', keyCode: 68};
+          }
+          if(ev){
+            window.dispatchEvent(new KeyboardEvent('keydown', ev));
+          }
+        break;
+      }
+    }, false);
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Sapporo-2D</title>
+  </head>
+  <body style="text-align: center">
+    <canvas id="unity-canvas" style="width: 960px; height: 600px; background: #808080"></canvas>
+    <script src="Build/AUG26.loader.js"></script>
+    <script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/AUG26.data",
+        frameworkUrl: "Build/AUG26.framework.js",
+        codeUrl: "Build/AUG26.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Sapporo-2D",
+        productVersion: "0.1",
+      });
+    </script>
+  </body>
+</html>
